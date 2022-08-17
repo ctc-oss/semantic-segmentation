@@ -1,0 +1,4 @@
+boto3==1.24.4
+sagemaker==2.94.0
+black==22.3.0
+flake8==4.0.1

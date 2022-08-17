@@ -1,0 +1,12 @@
+data/*
+!data/download_datasets.py
+!data/SN6_Train_AOI_11_Rotterdam_Buildings.csv
+
+**/*.env
+!.env.template
+
+**/*__pycache__*
+
+*.jpg
+*.png
+test.py

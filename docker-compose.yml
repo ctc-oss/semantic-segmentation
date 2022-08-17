@@ -1,0 +1,60 @@
+version: '3.5'
+
+services:
+  build_image:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: semantic-segmentation:local
+
+  download_data:
+    image: semantic-segmentation:local
+    container_name: download_data
+    entrypoint: ./entrypoint.sh download_data
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+
+  setup_data:
+    image: semantic-segmentation:local
+    container_name: setup_data
+    entrypoint: ./entrypoint.sh setup_data
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      - DATA_TYPE=all # supported options are [all, s3, local]
+    volumes:
+      - ./:/app
+
+  train_model:
+    image: semantic-segmentation:local
+    container_name: train_model
+    entrypoint: ./entrypoint.sh train
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+
+  deploy_model:
+    image: semantic-segmentation:local
+    container_name: deploy_model
+    entrypoint: ./entrypoint.sh deploy
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+
+  test_model:
+    image: semantic-segmentation:local
+    container_name: test_model
+    entrypoint: ./entrypoint.sh test
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
